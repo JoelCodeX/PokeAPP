@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,25 +33,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.jotadev.pokeapp.domain.model.Pokemon
 import com.jotadev.pokeapp.ui.presentation.theme.orange
 
 @Composable
 fun PokemonCard(
+    pokemon: Pokemon,
     modifier: Modifier = Modifier,
     isFavorite: Boolean = false,
     onFavoriteClick: () -> Unit = {},
     navController: NavController
-
 ) {
     Card(
         modifier = modifier
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                    indication= null,
-                onClick ={navController.navigate("details") }
+                indication = null,
+                onClick = { navController.navigate("details/${pokemon.name}") }
             )
             .height(220.dp)
-            .width(50.dp)
+            .width(160.dp) // Adjusted width to be more reasonable
             .padding(5.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -74,7 +77,7 @@ fun PokemonCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "#1",
+                        text = "#${pokemon.id}",
                         color = Color.White,
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.ExtraBold,
@@ -94,16 +97,22 @@ fun PokemonCard(
                 }
             }
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
                 contentAlignment = Alignment.Center
             ) {
-
+                AsyncImage(
+                    model = pokemon.imageUrl,
+                    contentDescription = pokemon.name,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 modifier = Modifier.padding(bottom = 10.dp),
-                text = "POKEMON",
+                text = pokemon.name,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 18.sp

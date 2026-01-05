@@ -40,8 +40,8 @@ fun FavoriteScreen(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-            val favorites = null
-            if (isEmpty(favorites)) {
+            val favorites = emptyList<String>() // Placeholder
+            if (favorites.isEmpty()) {
                 Text(
                     text = "No has añadido ningún Pokémon a favoritos",
                     style = MaterialTheme.typography.bodyLarge,
@@ -51,16 +51,16 @@ fun FavoriteScreen(
                         .padding(top = 32.dp)
                 )
             } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(20) {
-                        PokemonCard(navController = navController)
-                    }
-                }
+//                LazyVerticalGrid(
+//                    columns = GridCells.Fixed(2),
+//                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+//                    verticalArrangement = Arrangement.spacedBy(8.dp),
+//                    modifier = Modifier.fillMaxSize()
+//                ) {
+//                    items(favorites.size) {
+//                         // PokemonCard(navController = navController, pokemon = ...)
+//                    }
+//                }
             }
         }
     }

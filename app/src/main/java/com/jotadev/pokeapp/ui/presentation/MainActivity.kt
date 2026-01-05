@@ -31,11 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.jotadev.pokeapp.ui.presentation.Routes.FavoriteScreen
+import androidx.navigation.navArgument
+import com.jotadev.pokeapp.ui.presentation.navigation.Routes
 import com.jotadev.pokeapp.ui.presentation.screens.details.DetailsScreen
 import com.jotadev.pokeapp.ui.presentation.screens.home.HomeScreen
 import com.jotadev.pokeapp.ui.presentation.screens.favorite.FavoriteScreen
@@ -60,6 +62,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun Boolean.setupStatusBar() {
         this@MainActivity.window.statusBarColor = orange.toArgb()
         WindowInsetsControllerCompat(
@@ -106,8 +109,13 @@ class MainActivity : ComponentActivity() {
                             onLogout = { showLogoutDialog = true }
                         )
                     }
-                    composable("details") {
+                    composable(
+                        route = "details/{name}",
+                        arguments = listOf(navArgument("name") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val name = backStackEntry.arguments?.getString("name") ?: ""
                         DetailsScreen(
+                            name = name,
                             onBackClick = { navController.popBackStack() },
                             onFavoriteClick = { /* Handle favorite click */ }
                         )

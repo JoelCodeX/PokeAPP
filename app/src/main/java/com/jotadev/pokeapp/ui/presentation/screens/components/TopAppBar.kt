@@ -45,7 +45,7 @@ fun TopAppBar(
                 elevation = 4.dp,
                 shape = RectangleShape
             ),
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
     )

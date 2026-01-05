@@ -1,4 +1,4 @@
-package com.jotadev.pokeapp.ui.presentation
+package com.jotadev.pokeapp.ui.presentation.navigation
 
 import com.jotadev.pokeapp.R
 

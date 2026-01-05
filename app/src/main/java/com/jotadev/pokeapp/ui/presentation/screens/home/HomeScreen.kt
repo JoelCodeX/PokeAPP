@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jotadev.pokeapp.R
 import com.jotadev.pokeapp.ui.presentation.screens.components.FilterButton
 import com.jotadev.pokeapp.ui.presentation.screens.components.PokemonCard
@@ -37,7 +38,12 @@ import com.jotadev.pokeapp.ui.presentation.screens.components.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: androidx.navigation.NavController) {
+fun HomeScreen(
+    navController: androidx.navigation.NavController,
+    viewModel: HomeViewModel = viewModel()
+) {
+    val state = viewModel.state.value
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -55,7 +61,7 @@ fun HomeScreen(navController: androidx.navigation.NavController) {
                         elevation = 10.dp,
                         shape = RectangleShape
                     ),
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                 )
             )
@@ -79,8 +85,11 @@ fun HomeScreen(navController: androidx.navigation.NavController) {
                     bottom = 16.dp
                 )
             ) {
-                items(20) { index ->
-                    PokemonCard(navController = navController)
+                items(state.pokemonList.size) { index ->
+                    PokemonCard(
+                        pokemon = state.pokemonList[index],
+                        navController = navController
+                    )
                 }
             }
 
